@@ -6,7 +6,7 @@ import time
 import os
 import logging
 from collections import Counter
-from general_utils import logged_loop, get_minibatches
+from .general_utils import logged_loop, get_minibatches
 from q2_parser_transitions import PartialParse, minibatch_parse
 
 import numpy as np

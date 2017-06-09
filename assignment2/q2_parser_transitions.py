@@ -74,6 +74,15 @@ def minibatch_parse(sentences, model, batch_size):
     """
 
     ### YOUR CODE HERE
+    partial_parses=[PartialParse(sentence) for sentence in sentences]
+    unfinished_parses=partial_parses[:]
+    while len(unfinished_parses)!=0:
+      minibatch=unfinished_parses[:batch_size]
+      transitions=model.predict(minibatch)
+      for (pp, tr) in zip(minibatch, transitions):
+        pp.parse_step(tr)
+        if len(pp.stack)==1 and len(pp.buffer)==0: unfinished_parses.remove(pp)
+    dependencies=[pp.dependencies for pp in partial_parses]
     ### END YOUR CODE
 
     return dependencies
